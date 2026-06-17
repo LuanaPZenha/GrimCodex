@@ -3,6 +3,31 @@ import { useAuth } from '../context/AuthContext';
 import { PlatformBadge } from '../components/PlatformIcon';
 import { IMAGES } from '../utils/diabloTheme';
 
+function DashboardCard({ to, emoji, title, description, tint = '' }) {
+  return (
+    <Link
+      to={to}
+      className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/80 p-6 transition hover:border-red-700/50 hover:shadow-glow"
+    >
+      <img
+        src={IMAGES.cardBanner}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover opacity-20 transition group-hover:opacity-30"
+      />
+      {tint && (
+        <div className={`absolute inset-0 bg-gradient-to-br ${tint} opacity-50 transition group-hover:opacity-40`} />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/70 via-zinc-950/20 to-transparent" />
+      <div className="relative">
+        <span className="text-4xl" aria-hidden="true">{emoji}</span>
+        <h2 className="mt-3 font-display text-lg text-zinc-100 group-hover:text-amber-500">{title}</h2>
+        <p className="mt-2 text-sm text-zinc-400">{description}</p>
+      </div>
+    </Link>
+  );
+}
+
 export default function HomePage() {
   const { user } = useAuth();
   const displayName = user?.name || user?.nome || user?.email || 'Viajante';
@@ -34,91 +59,45 @@ export default function HomePage() {
       </div>
 
       <div className={`grid gap-4 sm:grid-cols-2 ${isAdmin ? 'lg:grid-cols-3' : 'lg:grid-cols-3'}`}>
-        <Link
+        <DashboardCard
           to="/items"
-          className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/80 p-6 transition hover:border-red-700/50 hover:shadow-glow"
-        >
-          <img
-            src={IMAGES.cardBanner}
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 h-full w-full object-cover opacity-20 transition group-hover:opacity-30"
-          />
-          <div className="relative">
-            <span className="text-4xl" aria-hidden="true">🏆</span>
-            <h2 className="mt-3 font-display text-lg text-zinc-100 group-hover:text-amber-500">
-              Conquistas & Desafios
-            </h2>
-            <p className="mt-2 text-sm text-zinc-400">
-              📖 45 guias • 🎮 Grid estilo Steam • ⭐ Notas e status
-            </p>
-          </div>
-        </Link>
+          emoji="🏆"
+          title="Conquistas & Desafios"
+          description="📖 45 guias • 🎮 Grid estilo Steam • ⭐ Notas e status"
+        />
 
-        <Link
+        <DashboardCard
           to="/mounts"
-          className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/80 p-6 transition hover:border-red-700/50 hover:shadow-glow"
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-950/30 to-zinc-950 opacity-80" />
-          <div className="relative">
-            <span className="text-4xl" aria-hidden="true">🐎</span>
-            <h2 className="mt-3 font-display text-lg text-zinc-100 group-hover:text-amber-500">
-              Guia de Montarias
-            </h2>
-            <p className="mt-2 text-sm text-zinc-400">
-              🏇 19 montarias • 📍 Como desbloquear • ⭐ Raridade
-            </p>
-          </div>
-        </Link>
+          emoji="🐎"
+          title="Guia de Montarias"
+          description="🏇 19 montarias • 📍 Como desbloquear • ⭐ Raridade"
+          tint="from-amber-950/40 to-zinc-950"
+        />
 
-        <Link
+        <DashboardCard
           to="/forum"
-          className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/80 p-6 transition hover:border-red-700/50 hover:shadow-glow"
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-red-950/30 to-zinc-950 opacity-80" />
-          <div className="relative">
-            <span className="text-4xl" aria-hidden="true">💬</span>
-            <h2 className="mt-3 font-display text-lg text-zinc-100 group-hover:text-amber-500">
-              Fórum dos Nephalem
-            </h2>
-            <p className="mt-2 text-sm text-zinc-400">
-              ❓ Dúvidas • ⚔️ Builds • 🔴 Chat ao vivo
-            </p>
-          </div>
-        </Link>
+          emoji="💬"
+          title="Fórum dos Nephalem"
+          description="❓ Dúvidas • ⚔️ Builds • 🔴 Chat ao vivo"
+          tint="from-red-950/40 to-zinc-950"
+        />
 
-        <Link
+        <DashboardCard
           to="/players"
-          className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/80 p-6 transition hover:border-red-700/50 hover:shadow-glow"
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-950/30 to-zinc-950 opacity-80" />
-          <div className="relative">
-            <span className="text-4xl" aria-hidden="true">🧙</span>
-            <h2 className="mt-3 font-display text-lg text-zinc-100 group-hover:text-amber-500">
-              Perfis de Jogadores
-            </h2>
-            <p className="mt-2 text-sm text-zinc-400">
-              📊 Stats • 🏆 Conquistas • ⏱️ Horas jogadas
-            </p>
-          </div>
-        </Link>
+          emoji="🧙"
+          title="Perfis de Jogadores"
+          description="📊 Stats • 🏆 Conquistas • ⏱️ Horas jogadas"
+          tint="from-purple-950/40 to-zinc-950"
+        />
 
         {isAdmin && (
-          <Link
+          <DashboardCard
             to="/users"
-            className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/80 p-6 transition hover:border-red-700/50 hover:shadow-glow"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-950/20 to-red-950/20 opacity-0 transition group-hover:opacity-100" />
-            <div className="relative">
-              <span className="text-4xl" aria-hidden="true">👥</span>
-              <h2 className="mt-3 font-display text-lg text-zinc-100 group-hover:text-amber-500">
-                Gamers & Críticos
-              </h2>
-              <p className="mt-2 text-sm text-zinc-400">
-                🛡️ Admin • ✏️ CRUD de usuários • 🔐 Permissões JWT
-              </p>
-            </div>
-          </Link>
+            emoji="👥"
+            title="Gamers & Críticos"
+            description="🛡️ Admin • ✏️ CRUD de usuários • 🔐 Permissões JWT"
+            tint="from-amber-950/30 to-red-950/30"
+          />
         )}
       </div>
     </div>
