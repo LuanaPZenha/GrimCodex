@@ -75,6 +75,14 @@ export default function HomePage() {
         />
 
         <DashboardCard
+          to="/world-bosses"
+          emoji="👹"
+          title="Guia de World Bosses"
+          description="💀 7 bosses • ⚔️ Estratégias • 🎁 Cache semanal"
+          tint="from-red-950/40 to-zinc-950"
+        />
+
+        <DashboardCard
           to="/forum"
           emoji="💬"
           title="Fórum dos Nephalem"

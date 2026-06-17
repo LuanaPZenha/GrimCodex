@@ -91,6 +91,42 @@ export const CATEGORY_THEME = {
     gradient: 'from-cyan-950/50 via-blue-950/40 to-zinc-950',
     accent: 'border-cyan-800/40',
   },
+  'Fractured Peaks': {
+    emoji: '🏔️',
+    label: 'Fractured Peaks',
+    gradient: 'from-slate-950/70 via-zinc-900/90 to-zinc-950',
+    accent: 'border-slate-600/50',
+  },
+  Scosglen: {
+    emoji: '🌲',
+    label: 'Scosglen',
+    gradient: 'from-emerald-950/60 via-zinc-900/90 to-zinc-950',
+    accent: 'border-emerald-800/50',
+  },
+  'Dry Steppes': {
+    emoji: '🏜️',
+    label: 'Dry Steppes',
+    gradient: 'from-orange-950/60 via-amber-950/40 to-zinc-950',
+    accent: 'border-orange-800/50',
+  },
+  Kehjistan: {
+    emoji: '🕌',
+    label: 'Kehjistan',
+    gradient: 'from-yellow-950/50 via-amber-950/40 to-zinc-950',
+    accent: 'border-yellow-800/50',
+  },
+  Hawezar: {
+    emoji: '🐊',
+    label: 'Hawezar',
+    gradient: 'from-teal-950/60 via-zinc-900/90 to-zinc-950',
+    accent: 'border-teal-800/50',
+  },
+  Nahantu: {
+    emoji: '🌴',
+    label: 'Nahantu',
+    gradient: 'from-lime-950/50 via-emerald-950/40 to-zinc-950',
+    accent: 'border-lime-800/40',
+  },
   Establo: {
     emoji: '🏇',
     label: 'Estábulo & Renown',
@@ -103,6 +139,16 @@ export const CATEGORY_THEME = {
     gradient: 'from-pink-950/50 via-fuchsia-950/30 to-zinc-950',
     accent: 'border-pink-800/50',
   },
+};
+
+export const WORLD_BOSS_EMOJIS = {
+  'World Boss System': '🗺️',
+  'Ashava, the Pestilent': '🕷️',
+  'Avarice, the Gold-Cursed': '💰',
+  'Wandering Death': '💀',
+  'The Blood Maiden': '🩸',
+  'Azmodan, World Boss': '😈',
+  'Supreme Chaos': '🌀',
 };
 
 export const MOUNT_EMOJIS = {
@@ -126,6 +172,22 @@ export const MOUNT_EMOJIS = {
   'Skovos Riding Steed': '🏝️',
   'Mount Trophy — Skovos': '🌊',
 };
+
+export const WORLD_BOSS_CATEGORY_ORDER = [
+  'Endgame',
+  'Fractured Peaks',
+  'Scosglen',
+  'Dry Steppes',
+  'Kehjistan',
+  'Hawezar',
+  'Nahantu',
+  'DLC VoH',
+];
+
+export const WORLD_BOSS_CATEGORY_OPTIONS = WORLD_BOSS_CATEGORY_ORDER.map((value) => ({
+  value,
+  ...CATEGORY_THEME[value],
+}));
 
 export const MOUNT_CATEGORY_ORDER = [
   'Campanha',
@@ -169,6 +231,7 @@ export const NAV_ICONS = {
   dashboard: '🏠',
   items: '🏆',
   mounts: '🐎',
+  worldBosses: '👹',
   forum: '💬',
   players: '🧙',
   users: '👥',
@@ -266,6 +329,10 @@ export function getAchievementEmoji(title) {
 
 export function getMountEmoji(title) {
   return MOUNT_EMOJIS[title] || '🐎';
+}
+
+export function getWorldBossEmoji(title) {
+  return WORLD_BOSS_EMOJIS[title] || '👹';
 }
 
 export function getCategoryTheme(category) {

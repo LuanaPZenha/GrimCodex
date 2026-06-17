@@ -148,9 +148,19 @@ export default function ItemGuideModal({ open, item, onClose, variant = 'achieve
 
   const location = item.location || 'Sanctuary';
 
-  const howToLabel = variant === 'mount' ? 'Como desbloquear' : 'Como fazer';
+  const howToLabel = variant === 'mount'
+    ? 'Como desbloquear'
+    : variant === 'worldBoss'
+      ? 'Como derrotar'
+      : 'Como fazer';
 
-  const guideTitle = variant === 'mount' ? 'Grimório — Detalhes da montaria' : 'Grimório — Detalhes extras';
+  const guideTitle = variant === 'mount'
+    ? 'Grimório — Detalhes da montaria'
+    : variant === 'worldBoss'
+      ? 'Grimório — Estratégia & loot'
+      : 'Grimório — Detalhes extras';
+
+  const timeLabel = variant === 'worldBoss' ? 'Tempo de luta / spawn' : 'Tempo médio';
 
 
 
@@ -228,7 +238,7 @@ export default function ItemGuideModal({ open, item, onClose, variant = 'achieve
 
 
 
-        <ContextSection icon="⏱️" title="Tempo médio" accent="border-amber-900/40">
+        <ContextSection icon="⏱️" title={timeLabel} accent="border-amber-900/40">
 
           {averageTime}
 

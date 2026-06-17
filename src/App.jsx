@@ -9,6 +9,7 @@ import HomePage from './pages/HomePage';
 import { UsersPage } from './pages/Users';
 import { ItemsPage } from './pages/Items';
 import { MountsPage } from './pages/Mounts';
+import { WorldBossesPage } from './pages/WorldBosses';
 import ForumPage from './pages/Forum';
 import PostDetailPage from './pages/Forum/PostDetail';
 import PlayersPage from './pages/Players';
@@ -44,6 +45,7 @@ export default function App() {
         />
         <Route path="items" element={<ItemsPage />} />
         <Route path="mounts" element={<MountsPage />} />
+        <Route path="world-bosses" element={<WorldBossesPage />} />
         <Route path="forum" element={<ForumPage />} />
         <Route path="forum/:id" element={<PostDetailPage />} />
         <Route path="players" element={<PlayersPage />} />
