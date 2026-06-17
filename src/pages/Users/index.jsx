@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import Modal from '../../components/Modal';
+import PlatformPicker from '../../components/PlatformPicker';
+import { PlatformBadge } from '../../components/PlatformIcon';
 import { useToast } from '../../context/ToastContext';
 import { usersService } from '../../services/resources';
 import { getErrorMessage } from '../../services/api';
 import { normalizeUser, toUserPayload, unwrapList, formatRole } from '../../utils/normalize';
-import { PLATFORMS, DIABLO_CLASSES } from '../../utils/registerGuide';
+import { DIABLO_CLASSES } from '../../utils/registerGuide';
 
 const EMPTY_FORM = {
   name: '',
@@ -131,13 +133,13 @@ export default function UserFormModal({ open, onClose, user, onSaved }) {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label htmlFor="platform" className="mb-1 block text-sm text-zinc-300">🎮 Plataforma</label>
-            <select id="platform" name="platform" value={form.platform} onChange={handleChange} className="input-field">
-              {PLATFORMS.map((p) => (
-                <option key={p.value} value={p.value}>{p.emoji} {p.label}</option>
-              ))}
-            </select>
-          </div>
+          <label className="mb-2 block text-sm text-zinc-300">Plataforma</label>
+          <PlatformPicker
+            name="platform"
+            value={form.platform}
+            onChange={handleChange}
+          />
+        </div>
           <div>
             <label htmlFor="favoriteClass" className="mb-1 block text-sm text-zinc-300">⚔️ Classe</label>
             <select id="favoriteClass" name="favoriteClass" value={form.favoriteClass} onChange={handleChange} className="input-field">
@@ -261,7 +263,7 @@ export function UsersPage() {
                     </td>
                     <td className="px-4 py-3 text-zinc-400">@{user.username || '—'}</td>
                     <td className="px-4 py-3 text-zinc-400">
-                      {user.platformEmoji} {user.platform}
+                      <PlatformBadge platform={user.platform} size={16} />
                       {user.favoriteClass && (
                         <span className="ml-1 text-xs text-zinc-600">
                           {user.classEmoji} {user.favoriteClass}

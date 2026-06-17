@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import StatsEditModal from '../../components/StatsEditModal';
+import { PlatformBadge } from '../../components/PlatformIcon';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import { profilesService } from '../../services/resources';
@@ -134,7 +135,7 @@ export default function PlayerProfilePage() {
             <h1 className="mt-1 font-display text-3xl font-bold text-zinc-100 sm:text-4xl">{profile.name}</h1>
             <p className="mt-1 text-lg text-amber-500">@{profile.username}</p>
             <p className="mt-2 text-sm text-zinc-400">
-              {profile.platformEmoji} {profile.platform}
+              <PlatformBadge platform={profile.platform} size={18} />
               {profile.favoriteClass && profile.favoriteClass !== 'Nenhuma' && (
                 <> · Favorita: {profile.classEmoji} {profile.favoriteClass}</>
               )}

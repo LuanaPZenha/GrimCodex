@@ -1,5 +1,6 @@
 import { NavLink, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { PlatformBadge } from './PlatformIcon';
 import { IMAGES, NAV_ICONS } from '../utils/diabloTheme';
 
 const navItems = [
@@ -30,7 +31,7 @@ function NavContent({ onNavigate }) {
           <img src={IMAGES.flameIcon} alt="" className="h-10 w-10 shrink-0" aria-hidden="true" />
           <div className="min-w-0">
             <p className="font-display text-xs tracking-[0.3em] text-red-600">DIABLO IV</p>
-            <h1 className="font-display text-lg font-bold text-amber-500">Grim Codex</h1>
+            <h1 className="diablo-title text-lg font-bold text-amber-500">Grim Codex</h1>
           </div>
         </div>
         <p className="relative mt-3 truncate text-xs text-zinc-500">
@@ -39,9 +40,10 @@ function NavContent({ onNavigate }) {
         {user?.username && (
           <Link
             to={`/players/${user.username}`}
-            className="relative mt-1 block truncate text-xs text-zinc-600 hover:text-amber-500"
+            className="relative mt-1 flex items-center gap-1 truncate text-xs text-zinc-600 hover:text-amber-500"
           >
-            @{user.username} {user.platformEmoji || '🎮'} {user.platform}
+            <span>@{user.username}</span>
+            {user.platform && <PlatformBadge platform={user.platform} showLabel size={14} className="text-zinc-600" />}
           </Link>
         )}
       </div>
@@ -114,7 +116,7 @@ export function TopNavbar({ onMenuToggle }) {
         <img src={IMAGES.flameIcon} alt="" className="h-7 w-7" aria-hidden="true" />
         <div>
           <p className="font-display text-xs tracking-[0.2em] text-red-600">DIABLO IV</p>
-          <p className="font-display text-sm font-semibold text-amber-500">Grim Codex</p>
+          <p className="diablo-title font-display text-sm font-semibold text-amber-500">Grim Codex</p>
         </div>
       </div>
       <div className="w-9" />

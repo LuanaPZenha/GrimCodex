@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
+import DiabloBackground from './components/DiabloBackground';
 import ProtectedRoute from './routes/ProtectedRoute';
 import AdminRoute from './routes/AdminRoute';
 import Login from './pages/Login';
@@ -15,7 +16,10 @@ import PlayerProfilePage from './pages/Players/Profile';
 
 export default function App() {
   return (
-    <Routes>
+    <div className="relative min-h-screen">
+      <DiabloBackground />
+      <div className="relative z-10">
+        <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/cadastro" element={<Register />} />
@@ -47,6 +51,8 @@ export default function App() {
       </Route>
 
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
-    </Routes>
+        </Routes>
+      </div>
+    </div>
   );
 }

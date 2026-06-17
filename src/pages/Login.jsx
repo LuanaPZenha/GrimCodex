@@ -35,16 +35,13 @@ export default function Login() {
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-zinc-950 p-4">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden p-4">
       <img
         src={IMAGES.loginHero}
         alt=""
         aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover opacity-35"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20 mix-blend-luminosity"
       />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-zinc-950/80 via-zinc-950/70 to-zinc-950" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(127,29,29,0.35)_0%,_transparent_55%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(245,158,11,0.12),transparent_45%)]" />
 
       <div className="relative w-full max-w-md">
         <div className="mb-8 text-center">
@@ -52,7 +49,7 @@ export default function Login() {
             <img src={IMAGES.skullEmblem} alt="" className="h-12 w-12" aria-hidden="true" />
           </div>
           <p className="font-display text-xs tracking-[0.4em] text-red-600">🔥 SANCTUARY ARCHIVE</p>
-          <h1 className="mt-2 font-display text-3xl font-bold text-amber-500 sm:text-4xl">Grim Codex</h1>
+          <h1 className="diablo-title mt-2 text-3xl font-bold text-amber-500 sm:text-4xl">Grim Codex</h1>
           <p className="mt-2 text-sm text-zinc-400">👹 Guia de Conquistas & Reviews — Diablo IV</p>
         </div>
 

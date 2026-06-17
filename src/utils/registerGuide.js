@@ -1,9 +1,9 @@
 export const PLATFORMS = [
-  { value: 'PC', label: 'PC (Battle.net)', emoji: '🖥️' },
-  { value: 'PS5', label: 'PlayStation 5', emoji: '🎮' },
-  { value: 'Xbox', label: 'Xbox Series X|S', emoji: '🟢' },
-  { value: 'Switch', label: 'Nintendo Switch', emoji: '🔴' },
-  { value: 'Multiplataforma', label: 'Multiplataforma', emoji: '🌐' },
+  { value: 'PC', label: 'PC (Battle.net)', shortLabel: 'PC', emoji: '🖥️' },
+  { value: 'PS5', label: 'PlayStation 5', shortLabel: 'PS5', emoji: '🎮' },
+  { value: 'Xbox', label: 'Xbox Series X|S', shortLabel: 'Xbox', emoji: 'ⓧ' },
+  { value: 'Switch', label: 'Nintendo Switch', shortLabel: 'Switch', emoji: '🔴' },
+  { value: 'Multiplataforma', label: 'Multiplataforma', shortLabel: 'Todas', emoji: '🌐' },
 ];
 
 export const DIABLO_CLASSES = [

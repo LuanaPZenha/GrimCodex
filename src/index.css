@@ -4,7 +4,25 @@
 
 @layer base {
   body {
-    @apply min-h-screen bg-zinc-950 font-sans;
+    @apply min-h-screen bg-zinc-950 font-body text-base text-zinc-100 antialiased;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-wide;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    @apply font-body;
   }
 }
 
@@ -29,9 +47,100 @@
     @apply rounded-xl border border-zinc-800 bg-zinc-900/80 shadow-glow backdrop-blur-sm;
   }
 
+  .diablo-title {
+    @apply font-display tracking-[0.12em];
+    text-shadow:
+      0 0 24px rgba(220, 38, 38, 0.2),
+      0 2px 8px rgba(0, 0, 0, 0.6);
+  }
+
   .diablo-bg {
-    background-image:
-      radial-gradient(ellipse at 20% 0%, rgba(127, 29, 29, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 100%, rgba(120, 53, 15, 0.1) 0%, transparent 50%);
+    @apply relative;
+  }
+}
+
+@layer utilities {
+  .diablo-fog {
+    @apply absolute rounded-full blur-3xl;
+    filter: blur(60px);
+  }
+
+  .diablo-fog-a {
+    top: 10%;
+    left: -10%;
+    width: 55vw;
+    height: 55vw;
+    background: radial-gradient(circle, rgba(127, 29, 29, 0.45) 0%, transparent 70%);
+    animation: fog-drift-a 28s ease-in-out infinite;
+  }
+
+  .diablo-fog-b {
+    bottom: -5%;
+    right: -15%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(69, 10, 10, 0.5) 0%, transparent 68%);
+    animation: fog-drift-b 36s ease-in-out infinite;
+  }
+
+  .diablo-fog-c {
+    top: 40%;
+    left: 35%;
+    width: 40vw;
+    height: 40vw;
+    background: radial-gradient(circle, rgba(120, 53, 15, 0.35) 0%, transparent 72%);
+    animation: fog-drift-c 44s ease-in-out infinite;
+  }
+
+  .diablo-blood-pulse {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    width: min(90vw, 720px);
+    height: min(90vw, 720px);
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(185, 28, 28, 0.35) 0%, rgba(127, 29, 29, 0.12) 40%, transparent 70%);
+    animation: blood-pulse 8s ease-in-out infinite;
+  }
+
+  .diablo-rune-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(120vw, 900px);
+    height: min(120vw, 900px);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid rgba(220, 38, 38, 0.08);
+    box-shadow:
+      0 0 60px rgba(127, 29, 29, 0.12),
+      inset 0 0 80px rgba(69, 10, 10, 0.08);
+    background:
+      repeating-conic-gradient(
+        from 0deg,
+        rgba(220, 38, 38, 0.04) 0deg 8deg,
+        transparent 8deg 18deg
+      );
+    animation: rune-spin 120s linear infinite;
+    opacity: 0.5;
+  }
+
+  .diablo-rune-ring-reverse {
+    width: min(95vw, 680px);
+    height: min(95vw, 680px);
+    border-color: rgba(245, 158, 11, 0.06);
+    animation: rune-spin-reverse 180s linear infinite;
+    opacity: 0.35;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .diablo-fog-a,
+    .diablo-fog-b,
+    .diablo-fog-c,
+    .diablo-blood-pulse,
+    .diablo-rune-ring {
+      animation: none !important;
+    }
   }
 }

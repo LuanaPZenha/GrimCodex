@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { PlatformBadge } from '../components/PlatformIcon';
 import { IMAGES } from '../utils/diabloTheme';
 
 export default function HomePage() {
@@ -22,8 +23,8 @@ export default function HomePage() {
           <h1 className="mt-1 font-display text-2xl font-bold text-zinc-100 sm:text-3xl">
             Olá, <span className="text-amber-500">{displayName}</span> 🧙
           </h1>
-          <p className="mt-2 max-w-2xl text-zinc-400">
-            {user?.platformEmoji || '🎮'} {user?.platform || 'PC'}
+          <p className="mt-2 flex max-w-2xl flex-wrap items-center gap-x-2 gap-y-1 text-zinc-400">
+            <PlatformBadge platform={user?.platform || 'PC'} size={18} />
             {user?.favoriteClass && user.favoriteClass !== 'Nenhuma' && (
               <> • {user?.classEmoji} {user.favoriteClass}</>
             )}

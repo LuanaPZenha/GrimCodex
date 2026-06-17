@@ -3,8 +3,9 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { getErrorMessage } from '../services/api';
 import RegisterGuidePanel from '../components/RegisterGuidePanel';
+import PlatformPicker from '../components/PlatformPicker';
 import { IMAGES, NAV_ICONS } from '../utils/diabloTheme';
-import { PLATFORMS, DIABLO_CLASSES } from '../utils/registerGuide';
+import { DIABLO_CLASSES } from '../utils/registerGuide';
 
 const EMPTY_FORM = {
   name: '',
@@ -65,20 +66,19 @@ export default function Register() {
   };
 
   return (
-    <div className="relative min-h-screen bg-zinc-950 p-4 sm:p-6 lg:p-8">
+    <div className="relative min-h-screen p-4 sm:p-6 lg:p-8">
       <img
         src={IMAGES.loginHero}
         alt=""
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 h-full w-full object-cover opacity-25"
+        className="pointer-events-none fixed inset-0 h-full w-full object-cover opacity-15 mix-blend-luminosity"
       />
-      <div className="pointer-events-none fixed inset-0 bg-gradient-to-b from-zinc-950/90 via-zinc-950/85 to-zinc-950" />
 
       <div className="relative mx-auto max-w-6xl">
         <div className="mb-8 text-center">
           <img src={IMAGES.flameIcon} alt="" className="mx-auto mb-3 h-12 w-12" aria-hidden="true" />
           <p className="font-display text-xs tracking-[0.4em] text-red-600">NOVO VIAJANTE</p>
-          <h1 className="font-display text-3xl font-bold text-amber-500 sm:text-4xl">Cadastro — Grim Codex</h1>
+          <h1 className="diablo-title text-3xl font-bold text-amber-500 sm:text-4xl">Cadastro — Grim Codex</h1>
           <p className="mt-2 text-sm text-zinc-400">Crie sua conta de gamer/crítico do Santuário</p>
         </div>
 
@@ -188,23 +188,17 @@ export default function Register() {
               <p className="text-xs text-zinc-500">8+ chars • maiúscula • minúscula • número</p>
 
               <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="platform" className="mb-1 flex items-center gap-1.5 text-sm text-zinc-300">
-                    <span aria-hidden="true">🎮</span> Plataforma *
+                <div className="sm:col-span-2">
+                  <label className="mb-2 flex items-center gap-1.5 text-sm text-zinc-300">
+                    Plataforma *
                   </label>
-                  <select
-                    id="platform"
+                  <PlatformPicker
                     name="platform"
-                    required
                     value={form.platform}
                     onChange={handleChange}
                     onFocus={() => setActiveField('platform')}
-                    className="input-field"
-                  >
-                    {PLATFORMS.map((p) => (
-                      <option key={p.value} value={p.value}>{p.emoji} {p.label}</option>
-                    ))}
-                  </select>
+                    required
+                  />
                 </div>
                 <div>
                   <label htmlFor="favoriteClass" className="mb-1 flex items-center gap-1.5 text-sm text-zinc-300">

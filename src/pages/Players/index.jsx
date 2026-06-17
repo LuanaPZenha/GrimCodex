@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { PlatformBadge } from '../../components/PlatformIcon';
 import { profilesService } from '../../services/resources';
 import { getErrorMessage } from '../../services/api';
 import { normalizeProfile, unwrapList } from '../../utils/normalize';
@@ -22,8 +23,8 @@ function PlayerCard({ player }) {
             {player.name}
           </h3>
           <p className="text-sm text-amber-500/80">@{player.username}</p>
-          <p className="mt-1 text-xs text-zinc-500">
-            {player.platformEmoji} {player.platform}
+          <p className="mt-1 flex items-center gap-1 text-xs text-zinc-500">
+            <PlatformBadge platform={player.platform} size={14} />
             {player.mostUsedClass && player.mostUsedClass !== 'Nenhuma' && (
               <> · {player.mostUsedClassEmoji} {player.mostUsedClass}</>
             )}
