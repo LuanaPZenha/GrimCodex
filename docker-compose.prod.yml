@@ -1,0 +1,20 @@
+# Teste local com frontend de produção (nginx + build Vite)
+# Uso: docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build frontend backend postgres mongo
+
+services:
+  backend:
+    environment:
+      NODE_ENV: production
+      CORS_ORIGIN: http://localhost:8081
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      args:
+        VITE_API_URL: http://localhost:8080/api
+        VITE_SOCKET_URL: http://localhost:8080
+    ports:
+      - '8081:80'
+    volumes: []
+    environment: {}

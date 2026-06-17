@@ -1,0 +1,33 @@
+# Render — Frontend Grim Codex
+# IMPORTANTE: use Static Site OU Web Service Node (nao Docker dev)
+
+services:
+  # Opção recomendada: Static Site (grátis, mais rápido)
+  - type: web
+    name: grimcodex
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    pullRequestPreviewsEnabled: true
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+      - key: VITE_SOCKET_URL
+        sync: false
+
+  # Alternativa: Web Service Node (build + preview)
+  # - type: web
+  #   name: grimcodex
+  #   runtime: node
+  #   plan: free
+  #   buildCommand: npm install && npm run build
+  #   startCommand: npm start
+  #   envVars:
+  #     - key: VITE_API_URL
+  #       sync: false
+  #     - key: VITE_SOCKET_URL
+  #       sync: false

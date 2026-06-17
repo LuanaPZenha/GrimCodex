@@ -1,0 +1,91 @@
+# =============================================================================
+# Grim Codex — Docker Compose (desenvolvimento local)
+# Produção no Render: Postgres (Render) + MongoDB Atlas — ver render.yaml
+# =============================================================================
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: grimcodex-postgres
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U appuser -d appdb']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - grimcodex-network
+
+  mongo:
+    image: mongo:7
+    container_name: grimcodex-mongo
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - grimcodex-network
+
+  backend:
+    build:
+      context: ../api-dual-persistence
+      dockerfile: Dockerfile
+    container_name: grimcodex-backend
+    ports:
+      - '8080:3000'
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      JWT_SECRET: grimcodex-dev-secret-change-in-production
+      JWT_EXPIRES_IN: 1h
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppassword
+      POSTGRES_SSL: 'false'
+      MONGODB_URI: mongodb://mongo:27017/appdb
+      CORS_ORIGIN: http://localhost:3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
+    networks:
+      - grimcodex-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: grimcodex-frontend
+    ports:
+      - '3000:3000'
+    environment:
+      VITE_API_URL: http://localhost:8080/api
+      VITE_SOCKET_URL: http://localhost:8080
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - grimcodex-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  mongo_data:
+
+networks:
+  grimcodex-network:
+    driver: bridge
