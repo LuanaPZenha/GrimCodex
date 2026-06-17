@@ -4,6 +4,22 @@ let appConfig = {
   loaded: false,
 };
 
+function isLocalUrl(url) {
+  if (!url) return false;
+  try {
+    const { hostname } = new URL(url);
+    return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '0.0.0.0';
+  } catch {
+    return false;
+  }
+}
+
+function sanitizeUrl(url) {
+  if (!url) return '';
+  if (import.meta.env.PROD && isLocalUrl(url)) return '';
+  return url;
+}
+
 function resolveDevDefaults() {
   return {
     apiUrl: 'http://localhost:8080/api',
@@ -14,8 +30,8 @@ function resolveDevDefaults() {
 export async function loadAppConfig() {
   if (appConfig.loaded) return appConfig;
 
-  const viteApi = import.meta.env.VITE_API_URL;
-  const viteSocket = import.meta.env.VITE_SOCKET_URL;
+  const viteApi = sanitizeUrl(import.meta.env.VITE_API_URL || '');
+  const viteSocket = sanitizeUrl(import.meta.env.VITE_SOCKET_URL || '');
 
   let fileConfig = {};
   try {
@@ -30,8 +46,8 @@ export async function loadAppConfig() {
     /* config.json opcional */
   }
 
-  let apiUrl = fileConfig.apiUrl || viteApi || '';
-  let socketUrl = fileConfig.socketUrl || viteSocket || '';
+  let apiUrl = sanitizeUrl(fileConfig.apiUrl || viteApi || '');
+  let socketUrl = sanitizeUrl(fileConfig.socketUrl || viteSocket || '');
 
   if (!apiUrl && import.meta.env.DEV) {
     ({ apiUrl, socketUrl } = resolveDevDefaults());

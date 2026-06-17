@@ -55,7 +55,7 @@ export function getErrorMessage(error) {
 
   if (!error.response) {
     if (!base) {
-      return 'API não configurada. No Render, defina VITE_API_URL (ex.: https://sua-api.onrender.com/api) e faça redeploy do frontend.';
+      return 'API não configurada. No Render (Environment), defina VITE_API_URL com a URL pública do backend (ex.: https://sua-api.onrender.com/api) — não use localhost. Depois faça redeploy do frontend e confirme que o backend está no ar.';
     }
     if (error.code === 'ERR_NETWORK' || error.message === 'Network Error') {
       return `Não foi possível conectar à API (${base}). Confirme se o backend está publicado no Render e se CORS_ORIGIN no backend inclui a URL deste site.`;
