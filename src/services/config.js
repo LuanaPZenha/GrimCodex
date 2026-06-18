@@ -21,10 +21,9 @@ function sanitizeUrl(url) {
 }
 
 function resolveDevDefaults() {
-  return {
-    apiUrl: 'http://localhost:8080/api',
-    socketUrl: 'http://localhost:8080',
-  };
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8082/api';
+  const socketUrl = import.meta.env.VITE_SOCKET_URL || apiUrl.replace(/\/api\/?$/, '');
+  return { apiUrl, socketUrl };
 }
 
 export async function loadAppConfig() {

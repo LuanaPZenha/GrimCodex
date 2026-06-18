@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const apiUrl = (process.env.VITE_API_URL || '').trim();
+const apiUrl = (process.env.VITE_API_URL || 'http://localhost:8082/api').trim();
 const socketUrl = (process.env.VITE_SOCKET_URL || apiUrl.replace(/\/api\/?$/, '')).trim();
 const isLocal = /localhost|127\.0\.0\.1|0\.0\.0\.0/.test(apiUrl);
 const isRender = Boolean(process.env.RENDER);
