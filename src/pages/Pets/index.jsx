@@ -114,7 +114,7 @@ function PetFormModal({ open, onClose, item, onSaved }) {
             value={form.title}
             onChange={handleChange}
             className="input-field"
-            placeholder="Lord Corgi"
+            placeholder="Asheara"
           />
         </div>
 

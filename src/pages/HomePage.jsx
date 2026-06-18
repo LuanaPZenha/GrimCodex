@@ -78,7 +78,7 @@ export default function HomePage() {
           to="/pets"
           emoji="🐾"
           title="Guia de Pets"
-          description="🐱 10 pets • 💎 Loja Premium • 🎫 Battle Pass"
+          description="🐕 8 pets • 📖 Fé Perdida • 💎 Loja Premium"
           tint="from-pink-950/40 to-zinc-950"
         />
 

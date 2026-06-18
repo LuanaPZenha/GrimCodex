@@ -143,15 +143,14 @@ export const CATEGORY_THEME = {
 
 export const PET_EMOJIS = {
   'Sistema de Pets': '🐾',
-  'Lord Corgi': '🐕',
-  'Lord Grey': '🐈',
-  'Tongue the Devourer': '👅',
-  'Na-Krul Companion': '💀',
-  'Helltide Imp': '😈',
-  'Nahantu Hatchling': '🦎',
-  'Skovos Sandcritter': '🦀',
-  'Battle Pass Pet': '🎫',
-  'Platinum Shop Rotation': '💎',
+  Asheara: '🐕',
+  Hratli: '🐕',
+  Alkor: '🐕',
+  Natalya: '🐈',
+  Orinocta: '🦉',
+  Iris: '🐈',
+  Dorian: '🦊',
+  Gorgo: '🐕',
 };
 
 export const MOUNT_EMOJIS = {
@@ -377,10 +376,21 @@ export const RARITY_TIERS = {
     cardGlow: '',
     cardBorder: 'border-zinc-800',
   },
+  PREMIUM: {
+    emoji: '💎',
+    label: 'Premium',
+    order: 3,
+    hunt: true,
+    border: 'border-amber-800/50',
+    bg: 'bg-amber-950/40',
+    text: 'text-amber-400',
+    cardGlow: 'hover:shadow-[0_0_18px_rgba(245,158,11,0.25)]',
+    cardBorder: 'hover:border-amber-700/50',
+  },
   RARA: {
     emoji: '🔵',
     label: 'Rara',
-    order: 3,
+    order: 4,
     hunt: true,
     border: 'border-blue-800/50',
     bg: 'bg-blue-950/40',
@@ -391,7 +401,7 @@ export const RARITY_TIERS = {
   EPICA: {
     emoji: '🟣',
     label: 'Épica',
-    order: 4,
+    order: 5,
     hunt: true,
     border: 'border-purple-800/50',
     bg: 'bg-purple-950/40',
@@ -402,7 +412,7 @@ export const RARITY_TIERS = {
   LENDARIA: {
     emoji: '🟠',
     label: 'Lendária',
-    order: 5,
+    order: 6,
     hunt: true,
     border: 'border-orange-800/50',
     bg: 'bg-orange-950/40',
@@ -413,7 +423,7 @@ export const RARITY_TIERS = {
   MITICA: {
     emoji: '🔴',
     label: 'Mítica',
-    order: 6,
+    order: 7,
     hunt: true,
     border: 'border-red-700/60',
     bg: 'bg-red-950/50',
@@ -428,7 +438,7 @@ export const RARITY_OPTIONS = Object.entries(RARITY_TIERS).map(([value, tier]) =
   ...tier,
 }));
 
-export const HUNT_RARITIES = ['RARA', 'EPICA', 'LENDARIA', 'MITICA'];
+export const HUNT_RARITIES = ['PREMIUM', 'RARA', 'EPICA', 'LENDARIA', 'MITICA'];
 
 export function getRarityTheme(rarity) {
   const key = String(rarity || 'COMUM').toUpperCase();
