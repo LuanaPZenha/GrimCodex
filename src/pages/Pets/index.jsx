@@ -9,17 +9,17 @@ import { itemsService } from '../../services/resources';
 import { getErrorMessage } from '../../services/api';
 import { normalizeItem, toItemPayload, unwrapList } from '../../utils/normalize';
 import {
-  WORLD_BOSS_CATEGORY_OPTIONS,
-  WORLD_BOSS_CATEGORY_ORDER,
+  PET_CATEGORY_OPTIONS,
+  PET_CATEGORY_ORDER,
   getCategoryTheme,
-  getWorldBossEmoji,
+  getPetEmoji,
   RARITY_OPTIONS,
   isHuntRarity,
 } from '../../utils/diabloTheme';
 
 const EMPTY_FORM = {
   title: '',
-  category: 'Endgame',
+  category: 'Cosmetica',
   rating: 2,
   rarity: 'INCOMUM',
   status: 'NA_FILA',
@@ -28,10 +28,10 @@ const EMPTY_FORM = {
   howTo: '',
   averageTime: '',
   location: '',
-  guideType: 'WORLD_BOSS',
+  guideType: 'MASCOTE',
 };
 
-function WorldBossFormModal({ open, onClose, item, onSaved }) {
+function PetFormModal({ open, onClose, item, onSaved }) {
   const toast = useToast();
   const [form, setForm] = useState(EMPTY_FORM);
   const [submitting, setSubmitting] = useState(false);
@@ -53,7 +53,7 @@ function WorldBossFormModal({ open, onClose, item, onSaved }) {
               howTo: item.howTo || '',
               averageTime: item.averageTime || '',
               location: item.location || '',
-              guideType: 'WORLD_BOSS',
+              guideType: 'MASCOTE',
             }
           : EMPTY_FORM
       );
@@ -75,10 +75,10 @@ function WorldBossFormModal({ open, onClose, item, onSaved }) {
       const payload = toItemPayload(form);
       if (isEditing) {
         await itemsService.update(item.id, payload);
-        toast.success('World Boss atualizado com sucesso.');
+        toast.success('Pet atualizado com sucesso.');
       } else {
         await itemsService.create(payload);
-        toast.success('World Boss cadastrado com sucesso.');
+        toast.success('Pet cadastrado com sucesso.');
       }
       onSaved();
       onClose();
@@ -95,7 +95,7 @@ function WorldBossFormModal({ open, onClose, item, onSaved }) {
     <Modal
       open={open}
       onClose={onClose}
-      title={isEditing ? 'Editar World Boss' : 'Novo World Boss'}
+      title={isEditing ? 'Editar Pet' : 'Novo Pet'}
       size="lg"
     >
       {error && (
@@ -106,31 +106,31 @@ function WorldBossFormModal({ open, onClose, item, onSaved }) {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="boss-title" className="mb-1 block text-sm text-zinc-300">Nome do Boss</label>
+          <label htmlFor="pet-title" className="mb-1 block text-sm text-zinc-300">Nome do Pet</label>
           <input
-            id="boss-title"
+            id="pet-title"
             name="title"
             required
             value={form.title}
             onChange={handleChange}
             className="input-field"
-            placeholder="Ashava, the Pestilent"
+            placeholder="Lord Corgi"
           />
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label htmlFor="boss-category" className="mb-1 block text-sm text-zinc-300">Região / spawn</label>
-            <select id="boss-category" name="category" value={form.category} onChange={handleChange} className="input-field">
-              {WORLD_BOSS_CATEGORY_OPTIONS.map((cat) => (
+            <label htmlFor="pet-category" className="mb-1 block text-sm text-zinc-300">Categoria</label>
+            <select id="pet-category" name="category" value={form.category} onChange={handleChange} className="input-field">
+              {PET_CATEGORY_OPTIONS.map((cat) => (
                 <option key={cat.value} value={cat.value}>{cat.emoji} {cat.label}</option>
               ))}
             </select>
           </div>
 
           <div>
-            <label htmlFor="boss-rarity" className="mb-1 block text-sm text-zinc-300">Selo de Raridade</label>
-            <select id="boss-rarity" name="rarity" value={form.rarity} onChange={handleChange} className="input-field">
+            <label htmlFor="pet-rarity" className="mb-1 block text-sm text-zinc-300">Selo de Raridade</label>
+            <select id="pet-rarity" name="rarity" value={form.rarity} onChange={handleChange} className="input-field">
               {RARITY_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.emoji} {option.label}
@@ -141,8 +141,8 @@ function WorldBossFormModal({ open, onClose, item, onSaved }) {
         </div>
 
         <div>
-          <label htmlFor="boss-status" className="mb-1 block text-sm text-zinc-300">Status</label>
-          <select id="boss-status" name="status" value={form.status} onChange={handleChange} className="input-field">
+          <label htmlFor="pet-status" className="mb-1 block text-sm text-zinc-300">Status</label>
+          <select id="pet-status" name="status" value={form.status} onChange={handleChange} className="input-field">
             {STATUS_OPTIONS.map((option) => (
               <option key={option.value} value={option.value}>{option.label}</option>
             ))}
@@ -150,7 +150,7 @@ function WorldBossFormModal({ open, onClose, item, onSaved }) {
         </div>
 
         <div>
-          <label className="mb-2 block text-sm text-zinc-300">Dificuldade (1–5)</label>
+          <label className="mb-2 block text-sm text-zinc-300">Raridade / destaque (1–5)</label>
           <StarRating
             value={form.rating}
             interactive
@@ -160,67 +160,67 @@ function WorldBossFormModal({ open, onClose, item, onSaved }) {
         </div>
 
         <div>
-          <label htmlFor="boss-description" className="mb-1 block text-sm text-zinc-300">Descrição</label>
+          <label htmlFor="pet-description" className="mb-1 block text-sm text-zinc-300">Descrição</label>
           <textarea
-            id="boss-description"
+            id="pet-description"
             name="description"
             rows={3}
             required
             value={form.description}
             onChange={handleChange}
             className="input-field resize-none"
-            placeholder="World Boss aracnídeo — veneno em área..."
+            placeholder="Pet cosmético que segue seu personagem..."
           />
         </div>
 
         <div>
-          <label htmlFor="boss-howTo" className="mb-1 block text-sm text-zinc-300">Como derrotar</label>
+          <label htmlFor="pet-howTo" className="mb-1 block text-sm text-zinc-300">Como desbloquear</label>
           <textarea
-            id="boss-howTo"
+            id="pet-howTo"
             name="howTo"
             rows={3}
             value={form.howTo}
             onChange={handleChange}
             className="input-field resize-none"
-            placeholder="Passo a passo para derrotar o boss..."
+            placeholder="Passo a passo para obter o pet..."
           />
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label htmlFor="boss-averageTime" className="mb-1 block text-sm text-zinc-300">Tempo médio / spawn</label>
+            <label htmlFor="pet-averageTime" className="mb-1 block text-sm text-zinc-300">Tempo médio</label>
             <input
-              id="boss-averageTime"
+              id="pet-averageTime"
               name="averageTime"
               value={form.averageTime}
               onChange={handleChange}
               className="input-field"
-              placeholder="5–15 min (co-op)"
+              placeholder="~1–2 horas"
             />
           </div>
           <div>
-            <label htmlFor="boss-location" className="mb-1 block text-sm text-zinc-300">Localização</label>
+            <label htmlFor="pet-location" className="mb-1 block text-sm text-zinc-300">Localização</label>
             <input
-              id="boss-location"
+              id="pet-location"
               name="location"
               value={form.location}
               onChange={handleChange}
               className="input-field"
-              placeholder="Fractured Peaks — The Crucible"
+              placeholder="Loja Premium"
             />
           </div>
         </div>
 
         <div>
-          <label htmlFor="boss-guide" className="mb-1 block text-sm text-zinc-300">Guia completo (estratégia & loot)</label>
+          <label htmlFor="pet-guide" className="mb-1 block text-sm text-zinc-300">Guia completo (detalhes extras)</label>
           <textarea
-            id="boss-guide"
+            id="pet-guide"
             name="guide"
             rows={8}
             value={form.guide}
             onChange={handleChange}
             className="input-field resize-none font-mono text-xs"
-            placeholder="Mecânicas, dicas de co-op, loot..."
+            placeholder="Dicas, rotação da loja, Battle Pass..."
           />
         </div>
 
@@ -235,7 +235,7 @@ function WorldBossFormModal({ open, onClose, item, onSaved }) {
   );
 }
 
-export function WorldBossesPage() {
+export function PetsPage() {
   const toast = useToast();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -251,7 +251,7 @@ export function WorldBossesPage() {
   const loadItems = async () => {
     setLoading(true);
     try {
-      const data = await itemsService.list({ guideType: 'WORLD_BOSS' });
+      const data = await itemsService.list({ guideType: 'MASCOTE' });
       setItems(unwrapList(data).map(normalizeItem));
     } catch (err) {
       toast.error(getErrorMessage(err));
@@ -293,7 +293,7 @@ export function WorldBossesPage() {
       groups[item.category].push(item);
     });
 
-    return WORLD_BOSS_CATEGORY_ORDER
+    return PET_CATEGORY_ORDER
       .filter((cat) => groups[cat]?.length)
       .map((cat) => ({
         category: cat,
@@ -332,12 +332,12 @@ export function WorldBossesPage() {
   };
 
   const handleDelete = async (item) => {
-    if (!window.confirm(`Excluir o World Boss "${item.title}"?`)) return;
+    if (!window.confirm(`Excluir o pet "${item.title}"?`)) return;
 
     setDeletingId(item.id);
     try {
       await itemsService.remove(item.id);
-      toast.success('World Boss removido.');
+      toast.success('Pet removido.');
       await loadItems();
     } catch (err) {
       toast.error(getErrorMessage(err));
@@ -351,8 +351,8 @@ export function WorldBossesPage() {
       <ItemCard
         key={item.id}
         item={item}
-        getEmoji={getWorldBossEmoji}
-        clickHint="🧭 Clique para ver o guia do boss"
+        getEmoji={getPetEmoji}
+        clickHint="🧭 Clique para ver o guia do pet"
         onViewGuide={handleViewGuide}
         onEdit={handleEdit}
         onDelete={handleDelete}
@@ -365,21 +365,21 @@ export function WorldBossesPage() {
     <div>
       <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="text-xs uppercase tracking-widest text-red-600">👹 World Bosses de Sanctuary</p>
+          <p className="text-xs uppercase tracking-widest text-red-600">🐾 Companheiros de Sanctuary</p>
           <h1 className="font-display text-2xl font-bold text-zinc-100 sm:text-3xl">
-            💀 Guia de World Bosses
+            🐱 Guia de Pets
           </h1>
           <p className="mt-1 text-sm text-zinc-400">
-            {items.length} bosses no grimório — {huntStats.hunted}/{huntStats.total} raros derrotados.
+            {items.length} pets no grimório — {huntStats.hunted}/{huntStats.total} raros desbloqueados.
           </p>
         </div>
         <button type="button" onClick={handleCreate} className="btn-primary shrink-0">
-          ➕ Novo World Boss
+          ➕ Novo Pet
         </button>
       </div>
 
       <div className="mb-6">
-        <p className="mb-2 text-xs uppercase tracking-widest text-zinc-500">📍 Região de spawn</p>
+        <p className="mb-2 text-xs uppercase tracking-widest text-zinc-500">📂 Tipo de pet</p>
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
@@ -392,7 +392,7 @@ export function WorldBossesPage() {
           >
             🌐 Todas ({items.length})
           </button>
-          {WORLD_BOSS_CATEGORY_OPTIONS.map((option) => (
+          {PET_CATEGORY_OPTIONS.map((option) => (
             <button
               key={option.value}
               type="button"
@@ -413,7 +413,7 @@ export function WorldBossesPage() {
       <div className="mb-4 flex flex-wrap gap-2">
         {[
           { value: 'ALL', label: 'Todas', emoji: '🌐' },
-          { value: 'CONCLUIDO', label: 'Derrotados', emoji: '✅' },
+          { value: 'CONCLUIDO', label: 'Desbloqueados', emoji: '✅' },
           { value: 'EM_ANDAMENTO', label: 'Em Progresso', emoji: '⚔️' },
           { value: 'NA_FILA', label: 'Na Fila', emoji: '⏳' },
         ].map((option) => (
@@ -477,13 +477,13 @@ export function WorldBossesPage() {
 
       {loading ? (
         <div className="py-24 text-center text-zinc-500">
-          <span className="mb-3 block text-4xl" aria-hidden="true">👹</span>
-          Invocando world bosses...
+          <span className="mb-3 block text-4xl" aria-hidden="true">🐾</span>
+          Invocando pets...
         </div>
       ) : filteredItems.length === 0 ? (
         <div className="card py-24 text-center text-zinc-500">
-          <span className="mb-3 block text-4xl" aria-hidden="true">💀</span>
-          Nenhum world boss encontrado. Registre o primeiro boss!
+          <span className="mb-3 block text-4xl" aria-hidden="true">🐱</span>
+          Nenhum pet encontrado. Registre seu primeiro pet!
         </div>
       ) : groupedItems ? (
         <div className="space-y-10">
@@ -493,7 +493,7 @@ export function WorldBossesPage() {
                 <span className="text-2xl" aria-hidden="true">{theme.emoji}</span>
                 <div>
                   <h2 className="font-display text-lg text-amber-500">{theme.label}</h2>
-                  <p className="text-xs text-zinc-500">{groupItems.length} bosses</p>
+                  <p className="text-xs text-zinc-500">{groupItems.length} pets</p>
                 </div>
               </div>
               <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -508,7 +508,7 @@ export function WorldBossesPage() {
         </div>
       )}
 
-      <WorldBossFormModal
+      <PetFormModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         item={selectedItem}
@@ -519,8 +519,8 @@ export function WorldBossesPage() {
         open={guideOpen}
         onClose={() => setGuideOpen(false)}
         item={guideItem}
-        variant="worldBoss"
-        getEmoji={getWorldBossEmoji}
+        variant="pet"
+        getEmoji={getPetEmoji}
       />
     </div>
   );

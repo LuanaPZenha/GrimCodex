@@ -141,14 +141,17 @@ export const CATEGORY_THEME = {
   },
 };
 
-export const WORLD_BOSS_EMOJIS = {
-  'World Boss System': '🗺️',
-  'Ashava, the Pestilent': '🕷️',
-  'Avarice, the Gold-Cursed': '💰',
-  'Wandering Death': '💀',
-  'The Blood Maiden': '🩸',
-  'Azmodan, World Boss': '😈',
-  'Supreme Chaos': '🌀',
+export const PET_EMOJIS = {
+  'Sistema de Pets': '🐾',
+  'Lord Corgi': '🐕',
+  'Lord Grey': '🐈',
+  'Tongue the Devourer': '👅',
+  'Na-Krul Companion': '💀',
+  'Helltide Imp': '😈',
+  'Nahantu Hatchling': '🦎',
+  'Skovos Sandcritter': '🦀',
+  'Battle Pass Pet': '🎫',
+  'Platinum Shop Rotation': '💎',
 };
 
 export const MOUNT_EMOJIS = {
@@ -173,18 +176,15 @@ export const MOUNT_EMOJIS = {
   'Mount Trophy — Skovos': '🌊',
 };
 
-export const WORLD_BOSS_CATEGORY_ORDER = [
+export const PET_CATEGORY_ORDER = [
+  'Campanha',
+  'Cosmetica',
   'Endgame',
-  'Fractured Peaks',
-  'Scosglen',
-  'Dry Steppes',
-  'Kehjistan',
-  'Hawezar',
-  'Nahantu',
   'DLC VoH',
+  'DLC LoH',
 ];
 
-export const WORLD_BOSS_CATEGORY_OPTIONS = WORLD_BOSS_CATEGORY_ORDER.map((value) => ({
+export const PET_CATEGORY_OPTIONS = PET_CATEGORY_ORDER.map((value) => ({
   value,
   ...CATEGORY_THEME[value],
 }));
@@ -231,7 +231,7 @@ export const NAV_ICONS = {
   dashboard: '🏠',
   items: '🏆',
   mounts: '🐎',
-  worldBosses: '👹',
+  pets: '🐾',
   forum: '💬',
   players: '🧙',
   users: '👥',
@@ -331,8 +331,8 @@ export function getMountEmoji(title) {
   return MOUNT_EMOJIS[title] || '🐎';
 }
 
-export function getWorldBossEmoji(title) {
-  return WORLD_BOSS_EMOJIS[title] || '👹';
+export function getPetEmoji(title) {
+  return PET_EMOJIS[title] || '🐾';
 }
 
 export function getCategoryTheme(category) {

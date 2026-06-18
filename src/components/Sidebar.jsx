@@ -7,7 +7,7 @@ const navItems = [
   { to: '/dashboard', label: 'Início', icon: NAV_ICONS.dashboard },
   { to: '/items', label: 'Conquistas', icon: NAV_ICONS.items },
   { to: '/mounts', label: 'Montarias', icon: NAV_ICONS.mounts },
-  { to: '/world-bosses', label: 'World Bosses', icon: NAV_ICONS.worldBosses },
+  { to: '/pets', label: 'Pets', icon: NAV_ICONS.pets },
   { to: '/forum', label: 'Fórum', icon: NAV_ICONS.forum },
   { to: '/players', label: 'Jogadores', icon: NAV_ICONS.players },
   { to: '/users', label: 'Gamers', icon: NAV_ICONS.users, adminOnly: true },

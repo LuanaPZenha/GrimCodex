@@ -75,11 +75,11 @@ export default function HomePage() {
         />
 
         <DashboardCard
-          to="/world-bosses"
-          emoji="👹"
-          title="Guia de World Bosses"
-          description="💀 7 bosses • ⚔️ Estratégias • 🎁 Cache semanal"
-          tint="from-red-950/40 to-zinc-950"
+          to="/pets"
+          emoji="🐾"
+          title="Guia de Pets"
+          description="🐱 10 pets • 💎 Loja Premium • 🎫 Battle Pass"
+          tint="from-pink-950/40 to-zinc-950"
         />
 
         <DashboardCard

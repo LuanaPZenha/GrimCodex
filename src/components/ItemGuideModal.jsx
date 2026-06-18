@@ -150,17 +150,17 @@ export default function ItemGuideModal({ open, item, onClose, variant = 'achieve
 
   const howToLabel = variant === 'mount'
     ? 'Como desbloquear'
-    : variant === 'worldBoss'
-      ? 'Como derrotar'
+    : variant === 'pet'
+      ? 'Como desbloquear'
       : 'Como fazer';
 
   const guideTitle = variant === 'mount'
     ? 'Grimório — Detalhes da montaria'
-    : variant === 'worldBoss'
-      ? 'Grimório — Estratégia & loot'
+    : variant === 'pet'
+      ? 'Grimório — Detalhes do pet'
       : 'Grimório — Detalhes extras';
 
-  const timeLabel = variant === 'worldBoss' ? 'Tempo de luta / spawn' : 'Tempo médio';
+  const timeLabel = 'Tempo médio';
 
 
 
