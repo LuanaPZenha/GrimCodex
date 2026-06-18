@@ -251,8 +251,11 @@ export function PetsPage() {
   const loadItems = async () => {
     setLoading(true);
     try {
-      const data = await itemsService.list({ guideType: 'MASCOTE' });
-      setItems(unwrapList(data).map(normalizeItem));
+      const data = await itemsService.list({ guideType: 'MASCOTE', tipoGuia: 'MASCOTE' });
+      const pets = unwrapList(data)
+        .map(normalizeItem)
+        .filter((item) => item.guideType === 'MASCOTE');
+      setItems(pets);
     } catch (err) {
       toast.error(getErrorMessage(err));
     } finally {
@@ -483,7 +486,7 @@ export function PetsPage() {
       ) : filteredItems.length === 0 ? (
         <div className="card py-24 text-center text-zinc-500">
           <span className="mb-3 block text-4xl" aria-hidden="true">🐱</span>
-          Nenhum pet encontrado. Registre seu primeiro pet!
+          Nenhum pet encontrado. Reinicie a API para carregar o seed ou cadastre um pet manualmente.
         </div>
       ) : groupedItems ? (
         <div className="space-y-10">

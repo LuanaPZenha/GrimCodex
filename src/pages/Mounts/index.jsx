@@ -251,8 +251,11 @@ export function MountsPage() {
   const loadItems = async () => {
     setLoading(true);
     try {
-      const data = await itemsService.list({ guideType: 'MONTARIA' });
-      setItems(unwrapList(data).map(normalizeItem));
+      const data = await itemsService.list({ guideType: 'MONTARIA', tipoGuia: 'MONTARIA' });
+      const mounts = unwrapList(data)
+        .map(normalizeItem)
+        .filter((item) => item.guideType === 'MONTARIA');
+      setItems(mounts);
     } catch (err) {
       toast.error(getErrorMessage(err));
     } finally {

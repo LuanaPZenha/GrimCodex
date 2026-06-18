@@ -246,8 +246,11 @@ export function ItemsPage() {
   const loadItems = async () => {
     setLoading(true);
     try {
-      const data = await itemsService.list({ guideType: 'CONQUISTA' });
-      setItems(unwrapList(data).map(normalizeItem));
+      const data = await itemsService.list({ guideType: 'CONQUISTA', tipoGuia: 'CONQUISTA' });
+      const achievements = unwrapList(data)
+        .map(normalizeItem)
+        .filter((item) => item.guideType === 'CONQUISTA');
+      setItems(achievements);
     } catch (err) {
       toast.error(getErrorMessage(err));
     } finally {
