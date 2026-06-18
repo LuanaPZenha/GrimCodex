@@ -18,9 +18,9 @@ module.exports = {
     url: process.env.DATABASE_URL || process.env.POSTGRES_URL || '',
     host: process.env.POSTGRES_HOST || 'localhost',
     port: parseInt(process.env.POSTGRES_PORT, 10) || 5432,
-    database: process.env.POSTGRES_DB || 'appdb',
-    username: process.env.POSTGRES_USER || 'appuser',
-    password: process.env.POSTGRES_PASSWORD || 'apppassword',
+    database: process.env.POSTGRES_DB || 'grimcodex_db',
+    username: process.env.POSTGRES_USER || 'grimcodex_user',
+    password: process.env.POSTGRES_PASSWORD || 'grimcodex_secret',
     ssl: process.env.POSTGRES_SSL === 'true'
       || Boolean(process.env.DATABASE_URL || process.env.POSTGRES_URL),
   },

@@ -1,62 +1,58 @@
-# =============================================================================
-# Grim Codex — Docker Compose (desenvolvimento local)
-# Produção no Render: apenas PostgreSQL — ver render.yaml
-# =============================================================================
+# Grim Codex — monorepo (mesmo padrao VTM / Vet Plus+)
 
 services:
-  postgres:
+  db:
     image: postgres:16-alpine
-    container_name: grimcodex-postgres
+    container_name: grimcodex-db
+    restart: unless-stopped
     environment:
-      POSTGRES_DB: appdb
-      POSTGRES_USER: appuser
-      POSTGRES_PASSWORD: apppassword
+      POSTGRES_USER: ${POSTGRES_USER:-grimcodex_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-grimcodex_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-grimcodex_db}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U appuser -d appdb']
-      interval: 5s
-      timeout: 5s
-      retries: 10
+      - grimcodex_pg_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
     networks:
       - grimcodex-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-grimcodex_user} -d ${POSTGRES_DB:-grimcodex_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    build: ./backend
     container_name: grimcodex-backend
-    ports:
-      - '8082:3000'
+    restart: unless-stopped
     environment:
-      NODE_ENV: development
+      NODE_ENV: ${NODE_ENV:-development}
       PORT: 3000
-      JWT_SECRET: grimcodex-dev-secret-change-in-production
-      JWT_EXPIRES_IN: 1h
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
-      POSTGRES_DB: appdb
-      POSTGRES_USER: appuser
-      POSTGRES_PASSWORD: apppassword
-      POSTGRES_SSL: 'false'
-      CORS_ORIGIN: http://localhost:3000
+      DATABASE_URL: postgresql://${POSTGRES_USER:-grimcodex_user}:${POSTGRES_PASSWORD:-grimcodex_secret}@db:5432/${POSTGRES_DB:-grimcodex_db}
+      JWT_SECRET: ${JWT_SECRET:-grimcodex-dev-secret-change-in-production}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-1h}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@example.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-Admin1234}
+    ports:
+      - "8082:3000"
     depends_on:
-      postgres:
+      db:
         condition: service_healthy
     networks:
       - grimcodex-network
-    restart: unless-stopped
 
   frontend:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: grimcodex-frontend
+    restart: unless-stopped
     ports:
-      - '3000:3000'
+      - "3000:3000"
     environment:
-      VITE_API_URL: http://localhost:8082/api
-      VITE_SOCKET_URL: http://localhost:8082
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:8082/api}
+      VITE_SOCKET_URL: ${VITE_SOCKET_URL:-http://localhost:8082}
     volumes:
       - .:/app
       - /app/node_modules
@@ -64,10 +60,9 @@ services:
       - backend
     networks:
       - grimcodex-network
-    restart: unless-stopped
 
 volumes:
-  postgres_data:
+  grimcodex_pg_data:
 
 networks:
   grimcodex-network:

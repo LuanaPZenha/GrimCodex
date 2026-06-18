@@ -45,7 +45,11 @@ app.use(apiLimiter);
  *         description: Aplicacao saudavel
  */
 app.get('/health', (_req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  res.json({
+    status: 'ok',
+    database: 'postgresql',
+    timestamp: new Date().toISOString(),
+  });
 });
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

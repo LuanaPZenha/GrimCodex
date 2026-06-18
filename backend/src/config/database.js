@@ -14,14 +14,11 @@ function createSequelize() {
     return new Sequelize(config.postgres.url, {
       ...commonOptions,
       dialect: 'postgres',
-      dialectOptions: config.postgres.ssl
-        ? {
-            ssl: {
-              require: true,
-              rejectUnauthorized: false,
-            },
-          }
-        : {},
+      dialectOptions: {
+        ssl: process.env.NODE_ENV === 'production'
+          ? { rejectUnauthorized: false }
+          : false,
+      },
     });
   }
 
