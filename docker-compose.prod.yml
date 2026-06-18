@@ -1,5 +1,5 @@
 # Teste local com frontend de produção (nginx + build Vite)
-# Uso: docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build frontend backend postgres mongo
+# Uso: docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build frontend backend postgres
 
 services:
   backend:
