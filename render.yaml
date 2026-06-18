@@ -1,5 +1,9 @@
 # Grim Codex — monorepo (frontend + backend + Postgres)
 # Deploy: Render Dashboard > New > Blueprint > repo GrimCodex
+#
+# Se o frontend ja existir sozinho, crie manualmente:
+#   - Postgres (grimcodex-postgres)
+#   - Web Service Docker: nome grimcodex-api, rootDir backend
 
 databases:
   - name: grimcodex-postgres
@@ -12,8 +16,8 @@ services:
     name: grimcodex-api
     runtime: docker
     plan: free
-    rootDir: backend
-    dockerfilePath: ./Dockerfile
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
     healthCheckPath: /health
     envVars:
       - key: NODE_ENV

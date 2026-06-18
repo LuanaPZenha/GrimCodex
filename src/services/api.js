@@ -58,6 +58,9 @@ export function getErrorMessage(error) {
       return 'API não configurada. No Render (Environment), defina VITE_API_URL com a URL pública do backend (ex.: https://sua-api.onrender.com/api) — não use localhost. Depois faça redeploy do frontend e confirme que o backend está no ar.';
     }
     if (error.code === 'ERR_NETWORK' || error.message === 'Network Error') {
+      if (base.includes('grimcodex-api.onrender.com')) {
+        return `A API (${base}) nao esta no ar. No Render, crie o servico Web Docker "grimcodex-api" (pasta backend/) com Postgres vinculado. Teste: https://grimcodex-api.onrender.com/health`;
+      }
       return `Não foi possível conectar à API (${base}). Confirme se o backend está publicado no Render e se CORS_ORIGIN no backend inclui a URL deste site.`;
     }
     return error.message || 'Erro de conexão com a API.';
