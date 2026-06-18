@@ -1,7 +1,38 @@
-# Render detecta este arquivo automaticamente.
-# Recomendado: Static Site (nao use o Dockerfile de dev no painel).
+# Grim Codex — monorepo (frontend + backend + Postgres)
+# Deploy: Render Dashboard > New > Blueprint > repo GrimCodex
+
+databases:
+  - name: grimcodex-postgres
+    databaseName: grimcodex
+    user: grimcodex
+    plan: free
 
 services:
+  - type: web
+    name: grimcodex-api
+    runtime: docker
+    plan: free
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: grimcodex-postgres
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 1h
+      - key: CORS_ORIGIN
+        value: https://grimcodex.onrender.com
+      - key: ADMIN_EMAIL
+        value: admin@example.com
+      - key: ADMIN_PASSWORD
+        sync: false
+
   - type: web
     name: grimcodex
     runtime: static

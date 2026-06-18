@@ -23,7 +23,7 @@ services:
 
   backend:
     build:
-      context: ../api-dual-persistence
+      context: ./backend
       dockerfile: Dockerfile
     container_name: grimcodex-backend
     ports:

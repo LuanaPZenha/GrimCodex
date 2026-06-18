@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Dual Persistence — Painel de Testes</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-brand">
+      <h1>Painel de Testes</h1>
+      <p>API Dual Persistence · MongoDB + PostgreSQL</p>
+    </div>
+    <div class="header-actions">
+      <span id="auth-status" class="badge badge-muted">Não autenticado</span>
+      <a href="/api-docs" target="_blank" class="btn btn-ghost">Swagger</a>
+      <button id="btn-logout" class="btn btn-ghost hidden" type="button">Sair</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <nav class="nav">
+        <button class="nav-item active" data-tab="auth" type="button">Autenticação</button>
+        <button class="nav-item" data-tab="cars" type="button">Carros</button>
+        <button class="nav-item" data-tab="motos" type="button">Motos</button>
+        <button class="nav-item" data-tab="marcas" type="button">Marcas de Roupa</button>
+        <button class="nav-item" data-tab="users" type="button">Usuários</button>
+      </nav>
+    </aside>
+
+    <section class="content">
+      <!-- Auth -->
+      <div id="tab-auth" class="tab-panel active">
+        <h2>Autenticação</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Login</h3>
+            <form id="form-login" class="form">
+              <label>Email<input type="email" name="email" required placeholder="admin@example.com"></label>
+              <label>Senha<input type="password" name="password" required placeholder="Admin1234"></label>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Entrar</button>
+                <button type="button" id="btn-admin-quick" class="btn btn-secondary">Login admin rápido</button>
+              </div>
+            </form>
+          </div>
+          <div class="card">
+            <h3>Registrar</h3>
+            <form id="form-register" class="form">
+              <label>Nome<input type="text" name="name" required></label>
+              <label>Email<input type="email" name="email" required></label>
+              <label>Senha<input type="password" name="password" required minlength="8" placeholder="Min. 8 chars, Aa1"></label>
+              <button type="submit" class="btn btn-primary">Registrar</button>
+            </form>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Perfil</h3>
+          <button id="btn-profile" class="btn btn-secondary" type="button">Buscar perfil</button>
+          <pre id="profile-result" class="result"></pre>
+        </div>
+      </div>
+
+      <!-- Cars -->
+      <div id="tab-cars" class="tab-panel">
+        <h2>Carros <span class="tag">MongoDB</span></h2>
+        <div class="card">
+          <h3 id="cars-form-title">Novo carro</h3>
+          <form id="form-cars" class="form form-inline">
+            <input type="hidden" name="id">
+            <label>Marca<input type="text" name="brand" required></label>
+            <label>Modelo<input type="text" name="model" required></label>
+            <label>Ano<input type="number" name="year" required min="1886"></label>
+            <label>Cor<input type="text" name="color" required></label>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Salvar</button>
+              <button type="button" id="cars-cancel" class="btn btn-ghost hidden">Cancelar</button>
+            </div>
+          </form>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3>Lista</h3>
+            <button id="cars-refresh" class="btn btn-secondary" type="button">Atualizar</button>
+          </div>
+          <div id="cars-list" class="table-wrap"></div>
+        </div>
+      </div>
+
+      <!-- Motos -->
+      <div id="tab-motos" class="tab-panel">
+        <h2>Motos <span class="tag">MongoDB</span></h2>
+        <div class="card">
+          <h3 id="motos-form-title">Nova moto</h3>
+          <form id="form-motos" class="form form-inline">
+            <input type="hidden" name="id">
+            <label>Marca<input type="text" name="brand" required></label>
+            <label>Modelo<input type="text" name="model" required></label>
+            <label>Ano<input type="number" name="year" required min="1885"></label>
+            <label>Cilindrada (cc)<input type="number" name="engineCapacity" required min="50"></label>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Salvar</button>
+              <button type="button" id="motos-cancel" class="btn btn-ghost hidden">Cancelar</button>
+            </div>
+          </form>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3>Lista</h3>
+            <button id="motos-refresh" class="btn btn-secondary" type="button">Atualizar</button>
+          </div>
+          <div id="motos-list" class="table-wrap"></div>
+        </div>
+      </div>
+
+      <!-- Marcas -->
+      <div id="tab-marcas" class="tab-panel">
+        <h2>Marcas de Roupa <span class="tag">MongoDB</span></h2>
+        <div class="card">
+          <h3 id="marcas-form-title">Nova marca</h3>
+          <form id="form-marcas" class="form form-inline">
+            <input type="hidden" name="id">
+            <label>Nome<input type="text" name="name" required></label>
+            <label>País<input type="text" name="country" required></label>
+            <label>Segmento<input type="text" name="segment" required></label>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Salvar</button>
+              <button type="button" id="marcas-cancel" class="btn btn-ghost hidden">Cancelar</button>
+            </div>
+          </form>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3>Lista</h3>
+            <button id="marcas-refresh" class="btn btn-secondary" type="button">Atualizar</button>
+          </div>
+          <div id="marcas-list" class="table-wrap"></div>
+        </div>
+      </div>
+
+      <!-- Users -->
+      <div id="tab-users" class="tab-panel">
+        <h2>Usuários <span class="tag tag-sql">PostgreSQL</span></h2>
+        <p class="hint">Requer login como <strong>admin</strong>.</p>
+        <div class="card">
+          <h3 id="users-form-title">Novo usuário</h3>
+          <form id="form-users" class="form form-inline">
+            <input type="hidden" name="id">
+            <label>Nome<input type="text" name="name" required></label>
+            <label>Email<input type="email" name="email" required></label>
+            <label>Senha<input type="password" name="password" placeholder="Obrigatório ao criar"></label>
+            <label>Role
+              <select name="role">
+                <option value="user">user</option>
+                <option value="admin">admin</option>
+              </select>
+            </label>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Salvar</button>
+              <button type="button" id="users-cancel" class="btn btn-ghost hidden">Cancelar</button>
+            </div>
+          </form>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3>Lista</h3>
+            <button id="users-refresh" class="btn btn-secondary" type="button">Atualizar</button>
+          </div>
+          <div id="users-list" class="table-wrap"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
