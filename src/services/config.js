@@ -26,6 +26,20 @@ function resolveDevDefaults() {
   return { apiUrl, socketUrl };
 }
 
+function resolveProdDefaults() {
+  if (typeof window === 'undefined') return { apiUrl: '', socketUrl: '' };
+
+  const host = window.location.hostname;
+  if (host === 'grimcodex.onrender.com') {
+    return {
+      apiUrl: 'https://grimcodex-api.onrender.com/api',
+      socketUrl: 'https://grimcodex-api.onrender.com',
+    };
+  }
+
+  return { apiUrl: '', socketUrl: '' };
+}
+
 export async function loadAppConfig() {
   if (appConfig.loaded) return appConfig;
 
@@ -50,6 +64,10 @@ export async function loadAppConfig() {
 
   if (!apiUrl && import.meta.env.DEV) {
     ({ apiUrl, socketUrl } = resolveDevDefaults());
+  }
+
+  if (!apiUrl && import.meta.env.PROD) {
+    ({ apiUrl, socketUrl } = resolveProdDefaults());
   }
 
   if (apiUrl && !socketUrl) {

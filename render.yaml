@@ -1,8 +1,5 @@
-# Render — Frontend Grim Codex
-# Deploy: New > Blueprint > conecte este repositorio
-#
-# IMPORTANTE: use runtime static (recomendado) ou Docker com Dockerfile.prod.
-# Nao use o Dockerfile de desenvolvimento no Render.
+# Render detecta este arquivo automaticamente.
+# Recomendado: Static Site (nao use o Dockerfile de dev no painel).
 
 services:
   - type: web
@@ -15,21 +12,8 @@ services:
       - type: rewrite
         source: /*
         destination: /index.html
-    pullRequestPreviewsEnabled: true
     envVars:
       - key: VITE_API_URL
         value: https://grimcodex-api.onrender.com/api
       - key: VITE_SOCKET_URL
         value: https://grimcodex-api.onrender.com
-
-  # Alternativa Docker (nginx + build Vite)
-  # - type: web
-  #   name: grimcodex
-  #   runtime: docker
-  #   plan: free
-  #   dockerfilePath: ./Dockerfile.prod
-  #   envVars:
-  #     - key: VITE_API_URL
-  #       value: https://grimcodex-api.onrender.com/api
-  #     - key: VITE_SOCKET_URL
-  #       value: https://grimcodex-api.onrender.com
